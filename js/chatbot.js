@@ -116,40 +116,16 @@ class Chatbot {
 
     async getAIResponse(message, context) {
         const prompt = this.createPrompt(message, context);
-        const API_KEY = 'AIzaSyBf64hc2_Kfwuich0pED9mjNWEvps4wJBA';
         
         try {
-            console.log('Sending request to Gemini API...');
-            const response = await fetch('https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent', {
+            console.log('Sending request to backend API endpoint...');
+            const response = await fetch('/api/chatbot', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${API_KEY}`,
                 },
                 body: JSON.stringify({
-                    contents: [{
-                        parts: [{
-                            text: prompt
-                        }]
-                    }],
-                    safetySettings: [
-                        {
-                            category: "HARM_CATEGORY_HARASSMENT",
-                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                        },
-                        {
-                            category: "HARM_CATEGORY_HATE_SPEECH",
-                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                        },
-                        {
-                            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                        },
-                        {
-                            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-                        }
-                    ],
+                    prompt: prompt,
                     generationConfig: {
                         temperature: 0.7,
                         topK: 40,
@@ -159,32 +135,25 @@ class Chatbot {
                 })
             });
 
-            console.log('Response status:', response.status);
+            console.log('Response status from backend:', response.status);
             
             if (!response.ok) {
                 const errorText = await response.text();
-                console.error('API Error Response:', errorText);
-                throw new Error(`API request failed with status ${response.status}`);
+                console.error('Backend API Error Response:', errorText);
+                throw new Error(`Backend API request failed with status ${response.status}`);
             }
 
             const data = await response.json();
-            console.log('API Response:', data);
+            console.log('Backend API Response:', data);
 
-            // Handle the response format for the v1 API
-            if (!data.candidates || !data.candidates[0]) {
-                console.error('No candidates in response:', data);
-                return this.getDefaultResponse();
+            if (!data.text) {
+                 console.error('No text field in backend response:', data);
+                 return this.getDefaultResponse();
             }
 
-            const text = data.candidates[0].content?.parts?.[0]?.text;
-            if (!text) {
-                console.error('No text in response parts:', data.candidates[0]);
-                return this.getDefaultResponse();
-            }
-
-            return text;
+            return data.text;
         } catch (error) {
-            console.error('Detailed error in getAIResponse:', {
+            console.error('Detailed error in getAIResponse (calling backend):', {
                 error: error,
                 message: error.message,
                 stack: error.stack
@@ -196,10 +165,10 @@ class Chatbot {
 
     getDefaultResponse(error = null) {
         const responses = [
-            "I'd be happy to tell you about our tax and accounting services. What's on your mind?",
-            "Need help with taxes or business finances? Let me know what you're looking for.",
-            "How can I help with your accounting needs today?",
-            "Looking for tax advice or business support? I'm here to help."
+            "I seem to be having a little trouble connecting right now. Could you please try your question again in a moment?",
+            "Apologies, I hit a small snag. Please ask again, and I'll do my best to help.",
+            "Something went wrong on my end. Can you rephrase your question or try again shortly?",
+            "Hmm, I'm not quite sure how to respond to that due to a temporary issue. Could you try asking differently?"
         ];
         
         if (error) {
@@ -210,23 +179,26 @@ class Chatbot {
     }
 
     createPrompt(message, context) {
-        return `You are a friendly accounting assistant. Keep responses under 2 sentences when possible. Be conversational but professional.
+        // Updated Prompt: More detailed persona, conversational style, accounting focus
+        return `You are 'MG Assistant', a friendly and knowledgeable virtual assistant for MG Accounting. 
+Act like a helpful human accounting specialist based in our Oakleigh office. Be conversational, empathetic, and professional. 
+Your primary goal is to answer user questions about Australian tax and accounting, explain our services, and assist users where possible. If a question is complex or requires personalized advice, gently guide them towards scheduling a consultation.
 
-Quick facts:
-- We offer: ${context.services.join(', ')}
-- Based in: Oakleigh, Melbourne
-- Phone: ${context.contact.phone}
+Key Information:
+- Firm: MG Accounting
+- Location: ${context.location} (${context.contact.address})
+- Services: ${context.services.join(', ')}
+- Contact: Phone ${context.contact.phone}, Email ${context.contact.email}
+- Tone: Warm, approachable, expert, clear, concise. Avoid overly technical jargon unless explaining a concept. Use 'we' to refer to MG Accounting.
+- Goal: Help users, provide accurate information based on general Australian accounting principles, and encourage consultation for specific advice.
 
-Style guide:
-- Be brief and natural, like a helpful receptionist
-- Use everyday language, avoid jargon
-- Responses should rarely exceed 2-3 lines
-- Be warm but professional
+Conversation History (Last 4 exchanges):
+${this.conversationHistory.slice(-4).map(msg => `${msg.role === 'user' ? 'Client' : 'Assistant'}: ${msg.content}`).join('\n')}
 
-User says: ${message}
+Current User Query:
+Client: ${message}
 
-Chat history:
-${this.conversationHistory.slice(-2).map(msg => `${msg.role}: ${msg.content}`).join('\n')}`;
+Your Response (as MG Assistant):`;
     }
 
     addMessage(content, role) {
