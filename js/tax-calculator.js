@@ -304,39 +304,51 @@ document.addEventListener('DOMContentLoaded', function() {
     updateDeductionFields();
     
     // Add event listener to the calculate button
-    document.querySelector('.calculator-btn').addEventListener('click', function(e) {
-        e.preventDefault();
-        calculateTax();
-    });
+    const calculateButton = document.querySelector('.calculator-btn');
+    if (calculateButton) {
+        calculateButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            calculateTax();
+        });
+    }
     
     // Add event listeners for real-time calculations
-    document.getElementById('annualIncome').addEventListener('input', debounce(calculateTax, 500));
+    const annualIncomeInput = document.getElementById('annualIncome');
+    if (annualIncomeInput) {
+        annualIncomeInput.addEventListener('input', debounce(calculateTax, 500));
+    }
     
     // Setup display toggle for vehicle expense input method
-    document.getElementById('vehicleMethod').addEventListener('change', function() {
-        const kmInput = document.getElementById('vehicleKm');
-        const expensesInput = document.getElementById('vehicleExpenses');
-        
-        if (this.value === 'cents') {
-            kmInput.classList.remove('hidden');
-            expensesInput.classList.add('hidden');
-        } else {
-            kmInput.classList.add('hidden');
-            expensesInput.classList.remove('hidden');
-        }
-    });
+    const vehicleMethod = document.getElementById('vehicleMethod');
+    if (vehicleMethod) {
+        vehicleMethod.addEventListener('change', function() {
+            const kmInput = document.getElementById('vehicleKm');
+            const expensesInput = document.getElementById('vehicleExpenses');
+            
+            if (this.value === 'cents') {
+                kmInput.classList.remove('hidden');
+                expensesInput.classList.add('hidden');
+            } else {
+                kmInput.classList.add('hidden');
+                expensesInput.classList.remove('hidden');
+            }
+        });
+    }
     
     // Setup display toggle for home office expense input method
-    document.getElementById('homeOfficeMethod').addEventListener('change', function() {
-        const hoursInput = document.getElementById('homeOfficeHours');
-        const actualExpenses = document.getElementById('actualHomeExpenses');
-        
-        if (this.value === 'actual') {
-            actualExpenses.classList.remove('hidden');
-        } else {
-            actualExpenses.classList.add('hidden');
-        }
-    });
+    const homeOfficeMethod = document.getElementById('homeOfficeMethod');
+    if (homeOfficeMethod) {
+        homeOfficeMethod.addEventListener('change', function() {
+            const hoursInput = document.getElementById('homeOfficeHours');
+            const actualExpenses = document.getElementById('actualHomeExpenses');
+            
+            if (this.value === 'actual') {
+                actualExpenses.classList.remove('hidden');
+            } else {
+                actualExpenses.classList.add('hidden');
+            }
+        });
+    }
 });
 
 // Debounce function to limit how often a function is called
