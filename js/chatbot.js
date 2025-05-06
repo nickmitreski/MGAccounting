@@ -108,7 +108,9 @@ class Chatbot {
 
     async getAIResponse(message) {
         try {
-            const context = this.prepareContext();
+            // Use a concise, assistant-focused system prompt
+            const systemPrompt = `You are MG Assistant, a friendly, concise, and conversational chatbot for MG Accounting. You have access to a knowledge base about MG Accounting and Australian tax (available to you, not the user). Only use it if needed to answer the user's question. Keep your answers under 3 sentences, never list more than 2 facts at a time, and always ask a relevant follow-up question. If a question is complex or tax-related, suggest contacting MG Accounting at info@mgaccounting.com.au or (03) 9563 4666. Do not repeat the same disclaimer in every message. Be warm, approachable, and helpful like a real assistant.`;
+
             const response = await fetch('/api/chatbot', {
                 method: 'POST',
                 headers: {
@@ -119,7 +121,7 @@ class Chatbot {
                     messages: [
                         {
                             role: "system",
-                            content: `You are MG Assistant, a friendly, concise, and conversational chatbot for MG Accounting. Use the provided knowledge base only if needed. Give short, human-like answers, and keep your replies brief and easy to read. Always ask a relevant follow-up question to keep the conversation going. If a question is complex or tax-related, suggest contacting MG Accounting at info@mgaccounting.com.au or (03) 9563 4666. Knowledge base: ${context.knowledge_base}`
+                            content: systemPrompt
                         },
                         {
                             role: "user",
