@@ -4208,3 +4208,17 @@ body.pushmenu-open .fullscreen-container {
 body.pushmenu-open #particles-js {
     display: none !important;
 }
+
+header, header nav.navbar {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1100 !important;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+body {
+    padding-top: 110px !important;
+}
