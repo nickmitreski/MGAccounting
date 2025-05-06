@@ -109,11 +109,10 @@ class Chatbot {
     async getAIResponse(message) {
         try {
             const context = this.prepareContext();
-            const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+            const response = await fetch('/api/chatbot', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer YOUR_MISTRAL_API_KEY' // Replace with your actual API key
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     model: "mistral-tiny",

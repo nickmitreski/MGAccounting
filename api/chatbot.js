@@ -14,74 +14,26 @@ const safetySettings = [
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
-        res.setHeader('Allow', ['POST']);
-        return res.status(405).json({ error: `Method ${req.method} Not Allowed` });
+        return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-
+    const apiKey = process.env.MISTRAL_API_KEY;
     if (!apiKey) {
-        console.error("API key not found in environment variables.");
-        return res.status(500).json({ error: "Server configuration error: API key missing." });
+        return res.status(500).json({ error: 'Mistral API key not configured' });
     }
 
     try {
-        const { prompt, generationConfig } = req.body;
-
-        if (!prompt) {
-            return res.status(400).json({ error: "Missing 'prompt' in request body." });
-        }
-
-        // Construct the correct API URL with the key as a query parameter
-        const apiUrl = `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${apiKey}`;
-
-        const requestBody = {
-            contents: [{ parts: [{ text: prompt }] }],
-            safetySettings: safetySettings,
-            generationConfig: generationConfig || { // Use provided config or default
-                temperature: 0.7,
-                topK: 40,
-                topP: 0.95,
-                maxOutputTokens: 1024,
-            }
-        };
-
-        console.log("Sending request to Google API:", apiUrl);
-        // console.log("Request body:", JSON.stringify(requestBody, null, 2)); // Optional: log full body
-
-        const googleApiResponse = await fetch(apiUrl, {
+        const response = await fetch('https://api.mistral.ai/v1/chat/completions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
             },
-            body: JSON.stringify(requestBody)
+            body: JSON.stringify(req.body)
         });
-
-        console.log("Google API response status:", googleApiResponse.status);
-
-        if (!googleApiResponse.ok) {
-            const errorText = await googleApiResponse.text();
-            console.error('Google API Error Response:', errorText);
-            // Forward a generic error to the client, log the specific one
-            return res.status(googleApiResponse.status).json({ error: "Failed to get response from AI service." });
-        }
-
-        const data = await googleApiResponse.json();
-        // console.log("Google API Response Data:", JSON.stringify(data, null, 2)); // Optional: log full data
-
-        // Extract the text response
-        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-        if (!text) {
-            console.error('No text found in Google API response:', data);
-            return res.status(500).json({ error: "AI service returned an unexpected response format." });
-        }
-
-        // Send the extracted text back to the frontend
-        res.status(200).json({ text: text });
-
+        const data = await response.json();
+        res.status(response.status).json(data);
     } catch (error) {
-        console.error('Error in /api/chatbot handler:', error);
-        res.status(500).json({ error: "An internal server error occurred." });
+        res.status(500).json({ error: 'Error communicating with Mistral API', details: error.message });
     }
 } 
