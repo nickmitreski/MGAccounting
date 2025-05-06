@@ -49,7 +49,7 @@
     <link rel="canonical" href="https://www.mgaccounting.com.au">
     
     <!-- favicon -->
-    <link rel="icon" href="favicon.png">
+    <link rel="icon" type="image/png" href="images/favicon.png">
     
     <!-- animation -->
     <link rel="stylesheet" href="css/animate.min.css"/>
@@ -256,6 +256,7 @@
             </header>
 <!-- end header -->
 
+<!-- HERO SECTION RESTORED -->
 <section id="home" class="no-padding no-transition parallax-hero">
     <div id="rev_slider_5_1_wrapper" class="rev_slider_wrapper fullscreen-container no-transition" data-alias="reone-1" data-source="gallery" style="background:transparent;padding:0px;">
         <!-- Add data-parallax attribute -->
@@ -264,15 +265,28 @@
                 <li data-index="rs-9" data-transition="fade" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="default" data-easeout="default" data-masterspeed="300"  data-rotate="0"  data-saveperformance="off"  data-title="Slide" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
                     <!-- Add data-bgparallax attribute to the background image -->
                     <img src="images/cover2.jpg" alt="MG Accounting Melbourne Office - Professional Tax Accountants in Oakleigh" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina>
-                    <!-- LAYERS -->
-                    <div class="tp-caption tp-resizeme" style="z-index: 19; white-space: nowrap; text-align: center; width: 100%; top: 0; left: 0;">
-                        <h1 style="font-size: 90px; color: #fff; font-weight: 700; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">
-                            MG Accounting Melbourne - Professional Tax Accountants & Business Advisors in Oakleigh
-                        </h1>
-                        <h2 style="font-size: 30px; color: #fff; font-weight: 400; margin-top: 20px; text-shadow: 0 2px 8px rgba(0,0,0,0.3);">
-                            Expert Tax Accountants, Business Advisors & Financial Planners in Melbourne
-                        </h2>
-                    </div>
+                    <!-- LAYER NR. 15 -->
+                    <div class="tp-caption   tp-resizeme"
+                         id="slide-67-layer-2"
+                         data-x="['center','center','center','center']" data-hoffset="['1','1','0','0']"
+                         data-y="['middle','middle','middle','middle']" data-voffset="['-70','-70','-70','-70']"
+                         data-fontsize="['90','90','70','50']"
+                         data-lineheight="['90','90','70','50']"
+                         data-width="['none','none','481','360']"
+                         data-height="none"
+                         data-whitespace="['nowrap','nowrap','normal','normal']"
+                         data-type="text"
+                         data-responsive_offset="on"
+                         data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"}]'
+                         data-textAlign="['center','center','center','center']"
+                         data-paddingtop="[0,0,0,0]"
+                         data-paddingright="[0,0,0,0]"
+                         data-paddingbottom="[0,0,0,0]"
+                         data-paddingleft="[0,0,0,0]"
+                         style="z-index: 19; white-space: nowrap; font-size: 90px; line-height: 90px; font-weight: 500; color: #272727; letter-spacing: -5px;font-family:'Poppins', sans-serif;">
+                        Welcome to<br/>
+                        <span class="text-red">MG</span> Accounting. </div>
+                    <!-- LAYER NR. 16 -->
                     <div class="tp-caption   tp-resizeme"
                          id="slide-67-layer-3"
                          data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
@@ -291,6 +305,7 @@
                          data-paddingbottom="[0,0,0,0]"
                          data-paddingleft="[0,0,0,0]"
                          style="z-index: 20; min-width: 480px; max-width: 480px; white-space: normal; font-size: 25px; line-height: 35px; font-weight: 400; color: #272727; letter-spacing: 0px;font-family:'Poppins', sans-serif;">Financial Peace of Mind</div>
+                    <!-- LAYER NR. 17 -->
                     <div class="tp-caption rev-btn tp-resizeme"
                          id="slide-67-layer-7"
                          data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
@@ -307,9 +322,15 @@
                     </div>
                 </li>
             </ul>
-            <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>    </div>
+            <!-- Remove navigation arrows and bullets -->
+            <!-- <div class="tp-leftarrow tparrows"></div> -->
+            <!-- <div class="tp-rightarrow tparrows"></div> -->
+            <!-- <div class="tp-bullets"></div> -->
+            <div class="tp-bannertimer tp-bottom" style="visibility: hidden !important;"></div>
+        </div>
     </div><!-- END REVOLUTION SLIDER -->
 </section>
+<!-- END HERO SECTION -->
 
             <!-- start features -->
             <section id="about" class="bg-black">
@@ -1107,8 +1128,6 @@
 <script src="js/wow.js"></script>
 <!-- parallax -->
 <script src="js/parallaxie.min.js"></script>
-<!-- particles -->
-<script src="js/particles.min.js"></script>
 <!-- isotope.pkgd.min js -->
 <script src="js/isotope.pkgd.min.js"></script>
 <!-- revolution -->
@@ -1124,9 +1143,6 @@
 <script src="revolution/js/extensions/revolution.extension.parallax.min.js"></script>
 <script src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
 <script src="revolution/js/extensions/revolution.extension.video.min.js"></script>
-<!-- Google Map Api -->
-<script src="http://maps.google.com/maps/api/js?key=AIzaSyAOBKD6V47-g_3opmidcmFapb3kSNAR70U"></script>
-<script src="js/map.js"></script>
 <!-- setting -->
 <script src="js/main.js"></script>
 <!-- Add this before </body> -->
