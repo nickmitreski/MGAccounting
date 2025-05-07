@@ -171,11 +171,7 @@ Guidelines:
 
 Example of CORRECT response:
 User: What is GST?
-Assistant: GST is a 10% tax on most goods and services in Australia. Businesses with turnover over $75,000 must register.
-
-Example of INCORRECT response (DO NOT DO THIS):
-User: What is GST?
-Assistant: Hey! Let me explain GST. It's a tax on goods and services. User: How much is it? Assistant: It's 10%! User: Do I need to register? Assistant: Yes, if your turnover is over $75,000.`;
+Assistant: GST is a 10% tax on most goods and services in Australia. Businesses with turnover over $75,000 must register.`;
 
             const response = await fetch('/api/chatbot', {
                 method: 'POST',
@@ -198,14 +194,22 @@ Assistant: Hey! Let me explain GST. It's a tax on goods and services. User: How 
             });
 
             if (!response.ok) {
+                console.error('API response not ok:', response.status, response.statusText);
                 throw new Error(`API request failed with status ${response.status}`);
             }
 
             const data = await response.json();
+            
+            if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+                console.error('Invalid API response format:', data);
+                throw new Error('Invalid API response format');
+            }
+
             return data.choices[0].message.content;
         } catch (error) {
             console.error('Error in getAIResponse:', error);
-            return this.getDefaultResponse(error);
+            // Return a more helpful error message
+            return "I apologize, but I'm having trouble processing your request. Please try again or contact MG Accounting directly at (03) 9563 4666 for immediate assistance.";
         }
     }
 
@@ -411,18 +415,10 @@ Assistant: Hey! Let me explain GST. It's a tax on goods and services. User: How 
     }
 
     getDefaultResponse(error = null) {
-        const responses = [
-            "I seem to be having a little trouble connecting right now. Could you please try your question again in a moment?",
-            "Apologies, I hit a small snag. Please ask again, and I'll do my best to help.",
-            "Something went wrong on my end. Can you rephrase your question or try again shortly?",
-            "Hmm, I'm not quite sure how to respond to that due to a temporary issue. Could you try asking differently?"
-        ];
-        
         if (error) {
             console.error('Using default response due to error:', error);
         }
-        
-        return responses[Math.floor(Math.random() * responses.length)];
+        return "I apologize, but I'm having trouble processing your request. Please try again or contact MG Accounting directly at (03) 9563 4666 for immediate assistance.";
     }
 
     createPrompt(message, context) {

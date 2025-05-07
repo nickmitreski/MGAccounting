@@ -55,11 +55,16 @@ export default async function handler(req, res) {
 
     const apiKey = process.env.MISTRAL_API_KEY;
     if (!apiKey) {
+        console.error('Mistral API key not configured');
         return res.status(500).json({ error: 'Mistral API key not configured' });
     }
 
     try {
         const { message, history } = req.body;
+        
+        if (!message) {
+            return res.status(400).json({ error: 'Message is required' });
+        }
         
         // Combine history with current message for context
         const conversationContext = history ? `${history}\nUser: ${message}` : `User: ${message}`;
@@ -80,10 +85,25 @@ export default async function handler(req, res) {
                 max_tokens: 150
             })
         });
+
+        if (!response.ok) {
+            console.error('Mistral API error:', response.status, response.statusText);
+            throw new Error(`Mistral API request failed with status ${response.status}`);
+        }
+
         const data = await response.json();
-        res.status(response.status).json(data);
+        
+        if (!data.choices || !data.choices[0] || !data.choices[0].message) {
+            console.error('Invalid Mistral API response format:', data);
+            throw new Error('Invalid Mistral API response format');
+        }
+
+        res.status(200).json(data);
     } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ error: 'Failed to get response from Mistral API' });
+        console.error('Error in chatbot API:', error);
+        res.status(500).json({ 
+            error: 'Failed to get response from Mistral API',
+            details: error.message
+        });
     }
 } 
