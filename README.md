@@ -66,6 +66,44 @@ This is the official website for MG Accounting, a professional tax accounting an
   - Adjust the follow-up question style or frequency.
 - For best results, always provide clear examples of the style you want in the system prompt.
 
+## Latest Updates (March 2024)
+- Enhanced chatbot with improved typing indicators and natural response timing
+- Added topic detection system for better context awareness
+- Optimized chat history storage with timestamps and topic tracking
+- Updated system prompt for more professional and concise responses
+- Improved service-specific guidelines and quote handling
+
+## Chatbot Features
+- Professional Australian tax and accounting assistance
+- Topic-aware responses (Tax, Business, Superannuation, Bookkeeping, Payroll)
+- Session-based memory for conversation context
+- Natural typing indicators with response timing
+- Service quote handling and MG Accounting information
+- Calendly integration for meeting scheduling
+
+## Deployment
+The website is deployed on Vercel. To trigger a new deployment:
+1. Make changes to the codebase
+2. Commit and push to GitHub
+3. Vercel will automatically deploy the changes
+4. If manual deployment is needed, use the Vercel dashboard
+
+## Local Development
+1. Clone the repository
+2. Install dependencies: `npm install`
+3. Run development server: `npm run dev`
+4. Access the site at `http://localhost:3000`
+
+## Environment Variables
+Required environment variables:
+- `MISTRAL_API_KEY`: Your Mistral AI API key
+- `NEXT_PUBLIC_SITE_URL`: Your site's URL
+
+## Contact
+For support or questions, contact:
+- Email: info@mgaccounting.com.au
+- Phone: (03) 9563 4666
+
 ---
 
 *Created by Flash Forward Digital for MG Accounting.* 
