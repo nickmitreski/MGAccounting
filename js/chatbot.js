@@ -160,30 +160,10 @@ class Chatbot {
 
     async getAIResponse(message) {
         try {
-            const systemPrompt = `You are a professional Australian tax and accounting assistant for MG Accounting. 
-Your responses should be:
-- Professional and authoritative
-- Clear and concise (max 30 words)
-- Accurate and informative
-- Free of emojis and casual language
-- Focused on providing valuable information
-
-IMPORTANT RULES:
-- NEVER include mock conversations in your responses
-- NEVER include "User:" or "Assistant:" in your responses
-- NEVER include multiple responses in a single message
-- ALWAYS respond directly to the user's question
-- NEVER use emojis or casual language
-
-Guidelines:
-- Use proper business terminology
-- Maintain a professional tone
-- Provide direct, actionable answers
-- Keep responses brief but informative
-
-Example of CORRECT response:
-User: What is GST?
-Assistant: GST is a 10% tax on most goods and services in Australia. Businesses with turnover over $75,000 must register.`;
+            // Add chat history to the request for context
+            const storedHistory = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
+            const lastFewMessages = storedHistory.slice(-6); // Get last 6 messages for context
+            const historyContext = lastFewMessages.map(msg => `${msg.role}: ${msg.content}`).join('\n');
 
             // Use the correct API endpoint URL
             const apiUrl = window.location.hostname === 'localhost' 
@@ -196,17 +176,8 @@ Assistant: GST is a 10% tax on most goods and services in Australia. Businesses 
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    model: "mistral-tiny",
-                    messages: [
-                        {
-                            role: "system",
-                            content: systemPrompt
-                        },
-                        {
-                            role: "user",
-                            content: message
-                        }
-                    ]
+                    message: message,
+                    history: historyContext
                 })
             });
 
