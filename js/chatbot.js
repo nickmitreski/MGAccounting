@@ -76,16 +76,40 @@ class Chatbot {
         this.addMessage(message, 'user');
         this.input.value = '';
 
-        // Show typing indicator
+        // Show typing indicator with estimated time
         const typingIndicator = document.createElement('div');
         typingIndicator.className = 'typing-indicator';
-        typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+        typingIndicator.innerHTML = `
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="typing-text">Thinking...</div>
+        `;
         this.messages.appendChild(typingIndicator);
         this.messages.scrollTop = this.messages.scrollHeight;
+
+        // Start response timer
+        const startTime = Date.now();
         
         try {
+            // Add chat history to the message
+            const storedHistory = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
+            const lastFewMessages = storedHistory.slice(-6); // Get last 6 messages for context
+            const historyContext = lastFewMessages.map(msg => `${msg.role}: ${msg.content}`).join('\n');
+            
             // Get response from Mistral API
             const response = await this.getAIResponse(message);
+            
+            // Calculate response time and ensure minimum display time
+            const responseTime = Date.now() - startTime;
+            const minDisplayTime = 1000; // Minimum 1 second display time
+            const remainingTime = Math.max(0, minDisplayTime - responseTime);
+            
+            if (remainingTime > 0) {
+                await new Promise(resolve => setTimeout(resolve, remainingTime));
+            }
             
             // Remove typing indicator
             this.messages.removeChild(typingIndicator);
@@ -97,6 +121,22 @@ class Chatbot {
             if (response.toLowerCase().includes('schedule a meeting') && !this.hasScheduledMeeting) {
                 this.addCalendlyWidget();
             }
+
+            // Store the message in session storage with timestamp
+            const currentHistory = JSON.parse(sessionStorage.getItem('chatHistory') || '[]');
+            currentHistory.push({ 
+                role: 'user', 
+                content: message,
+                timestamp: new Date().toISOString(),
+                topic: this.detectTopic(message)
+            });
+            currentHistory.push({ 
+                role: 'assistant', 
+                content: response,
+                timestamp: new Date().toISOString(),
+                topic: this.detectTopic(response)
+            });
+            sessionStorage.setItem('chatHistory', JSON.stringify(currentHistory));
         } catch (error) {
             // Remove typing indicator
             this.messages.removeChild(typingIndicator);
@@ -435,6 +475,25 @@ Your Response (as MG Assistant):`;
             this.hasScheduledMeeting = true;
             this.addMessage("Great! I see you've scheduled a meeting. Is there anything else I can help you with?", 'bot');
         });
+    }
+
+    detectTopic(message) {
+        const topics = {
+            tax: ['tax', 'deduction', 'return', 'ato', 'income', 'gst'],
+            business: ['business', 'company', 'structure', 'abn', 'gst'],
+            superannuation: ['super', 'superannuation', 'retirement', 'smsf'],
+            bookkeeping: ['bookkeeping', 'accounting', 'record', 'xero', 'myob'],
+            payroll: ['payroll', 'salary', 'wage', 'employee', 'payg'],
+            general: ['hello', 'hi', 'help', 'thanks', 'thank']
+        };
+
+        const lowerMessage = message.toLowerCase();
+        for (const [topic, keywords] of Object.entries(topics)) {
+            if (keywords.some(keyword => lowerMessage.includes(keyword))) {
+                return topic;
+            }
+        }
+        return 'general';
     }
 }
 
