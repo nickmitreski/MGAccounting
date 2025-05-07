@@ -60,4 +60,11 @@ All notable changes to the MG Accounting Website will be documented in this file
 ## [1.1.4] - 2024-05-06
 
 ### Fixed
-- Fixed 404 error on /api/chatbot by ensuring the knowledge base is loaded in api/chatbot.js and the function is valid for Vercel deployment. 
+- Fixed 404 error on /api/chatbot by ensuring the knowledge base is loaded in api/chatbot.js and the function is valid for Vercel deployment.
+
+## [1.1.5] - 2024-05-06
+
+### Enhanced
+- Added "type": "commonjs" to package.json for Vercel compatibility.
+- Improved README with a fresh Vercel deployment checklist and troubleshooting tips.
+- Added repository and description fields to package.json for clarity. 

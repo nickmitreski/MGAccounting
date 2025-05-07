@@ -1,5 +1,17 @@
 # MG Accounting Website
 
+## Fresh Vercel Deployment Checklist
+- Ensure your repo root contains `api/`, `index.html`, `vercel.json`, and `package.json`.
+- The `api/` directory must contain `chatbot.js` (all lowercase).
+- Your `package.json` should include `"type": "commonjs"` for Vercel compatibility.
+- The `vercel.json` file must be present and correct (see below).
+- Set your environment variable `MISTRAL_API_KEY` in Vercel.
+- In Vercel, the Root Directory should be blank (or `.`).
+- After deploying, check the Functions tab for `/api/chatbot`.
+- Test `https://your-vercel-domain/api/chatbot` (should return 405, not 404).
+
+---
+
 This is the official website for MG Accounting, a professional tax accounting and business advisory firm based in Oakleigh, Melbourne.
 
 ## Features

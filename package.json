@@ -15,5 +15,11 @@
   },
   "author": "MG Accounting",
   "license": "UNLICENSED",
-  "deployTimestamp": "2024-03-19T15:00:00Z"
+  "deployTimestamp": "2024-03-19T15:00:00Z",
+  "type": "commonjs",
+  "description": "MG Accounting Website with Vercel serverless chatbot integration.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nickmitreski/MGAccounting.git"
+  }
 } 
