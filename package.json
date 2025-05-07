@@ -1,6 +1,6 @@
 {
   "name": "mg-accounting-website",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "MG Accounting Website with AI-powered chatbot",
   "private": true,
   "scripts": {
@@ -14,5 +14,6 @@
     "node": ">=18.0.0"
   },
   "author": "MG Accounting",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "deployTimestamp": "2024-03-19T15:00:00Z"
 } 

@@ -2,6 +2,14 @@
 
 All notable changes to the MG Accounting Website will be documented in this file.
 
+## [1.1.2] - 2024-03-19
+
+### Changed
+- Updated deployment configuration for Vercel
+- Fixed static site deployment settings
+- Removed Next.js dependencies
+- Added proper static site serving configuration
+
 ## [1.1.1] - 2024-03-19
 
 ### Fixed
