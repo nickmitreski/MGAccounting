@@ -1,5 +1,11 @@
 // api/chatbot.js
 
+import fs from 'fs';
+import path from 'path';
+
+// Read the knowledge base file synchronously
+const knowledgeBase = fs.readFileSync(path.join(process.cwd(), 'knowledge_base.txt'), 'utf8');
+
 // Ensure we're using node-fetch if running in a Node.js environment locally
 // Vercel's environment provides fetch globally.
 const fetch = global.fetch || require('node-fetch');

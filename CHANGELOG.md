@@ -55,4 +55,9 @@ All notable changes to the MG Accounting Website will be documented in this file
 - Added troubleshooting steps for 404 errors on /api/chatbot.
 
 ### Fixed
-- Documentation improvements to help ensure successful chatbot API deployment. 
+- Documentation improvements to help ensure successful chatbot API deployment.
+
+## [1.1.4] - 2024-05-06
+
+### Fixed
+- Fixed 404 error on /api/chatbot by ensuring the knowledge base is loaded in api/chatbot.js and the function is valid for Vercel deployment. 
