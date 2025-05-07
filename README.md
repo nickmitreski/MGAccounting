@@ -57,6 +57,15 @@ This is the official website for MG Accounting, a professional tax accounting an
 - **Email:** info@mgaccounting.com.au
 - **Phone:** (03) 9563 4666
 
+## Chatbot Tone & Customization
+- The chatbot is now designed to give short, chatty, human-like replies using explicit example-driven prompts.
+- To further adjust tone, edit the system prompt in `js/chatbot.js` and add/remove example exchanges.
+- For even more control, you can:
+  - Add more sample dialogues to the system prompt.
+  - Specify a maximum number of sentences or words per reply.
+  - Adjust the follow-up question style or frequency.
+- For best results, always provide clear examples of the style you want in the system prompt.
+
 ---
 
 *Created by Flash Forward Digital for MG Accounting.* 
