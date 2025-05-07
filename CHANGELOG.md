@@ -45,4 +45,14 @@ All notable changes to the MG Accounting Website will be documented in this file
 - AI-powered chatbot integration
 - Calendly meeting scheduling
 - Responsive design
-- Service information pages 
+- Service information pages
+
+## [1.1.3] - 2024-05-06
+
+### Added
+- Updated README with detailed API deployment and troubleshooting instructions for Vercel.
+- Clarified required directory structure and vercel.json config for serverless API.
+- Added troubleshooting steps for 404 errors on /api/chatbot.
+
+### Fixed
+- Documentation improvements to help ensure successful chatbot API deployment. 

@@ -105,6 +105,43 @@ For support or questions, contact:
 - Email: info@mgaccounting.com.au
 - Phone: (03) 9563 4666
 
+## Chatbot & API Deployment Notes
+
+This project includes a serverless chatbot API using Mistral LLM, deployed via Vercel. To ensure the API works correctly:
+
+### API Directory Structure
+- The API endpoint must be located at: `api/chatbot.js` (relative to the project root)
+- The `api/` directory must be in the root of your repository (not inside a subfolder)
+
+### Vercel Configuration
+- The `vercel.json` file must be present in the root and include:
+  ```json
+  {
+    "version": 2,
+    "builds": [
+      { "src": "api/**/*.js", "use": "@vercel/node" },
+      { "src": "**/*", "use": "@vercel/static" }
+    ],
+    "routes": [
+      { "src": "/api/(.*)", "dest": "/api/$1" },
+      { "src": "/(.*)", "dest": "/$1" }
+    ]
+  }
+  ```
+
+### Troubleshooting 404 Errors on /api/chatbot
+- If you get a 404 on `/api/chatbot`, check:
+  1. The file exists at `api/chatbot.js` in your repo
+  2. The file is committed and pushed to GitHub
+  3. The Vercel project root is set to the main project folder
+  4. The `vercel.json` file is present and correct
+  5. Redeploy the project from the Vercel dashboard
+- On a successful deployment, visiting `/api/chatbot` in your browser should return a 405 error (not 404)
+
+### Additional Notes
+- All chatbot and API code is in `js/chatbot.js` and `api/chatbot.js`
+- For further help, see the deployment logs in Vercel or contact the project maintainer.
+
 ---
 
 *Created by Flash Forward Digital for MG Accounting.* 
