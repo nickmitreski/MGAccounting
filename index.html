@@ -1196,8 +1196,9 @@ if (typeof jQuery != 'undefined') {
 
 <!-- Chatbot Container -->
 <div class="chatbot-container" id="chatbot-container">
-    <button class="chatbot-button" id="chatbot-toggle">
+    <button class="chatbot-toggle" id="chatbot-toggle">
         <i class="fa fa-comments"></i>
+        <span class="chatbot-badge">1</span>
     </button>
     <div class="chatbot-window" id="chatbot-window">
         <div class="chatbot-header">
@@ -1205,13 +1206,13 @@ if (typeof jQuery != 'undefined') {
             <button class="chatbot-close" id="chatbot-close">&times;</button>
         </div>
         <div class="chatbot-messages" id="chatbot-messages">
-            <div class="message bot-message">
+            <div class="chatbot-message bot">
                 Hello! I'm your MG Accounting assistant. How can I help you today?
             </div>
         </div>
-        <div class="chatbot-input">
-            <input type="text" id="chatbot-input" placeholder="Type your message..." />
-            <button id="chatbot-send">
+        <div class="chatbot-input-container">
+            <textarea id="chatbot-input" class="chatbot-input" placeholder="Type your message..."></textarea>
+            <button id="chatbot-send" class="chatbot-send">
                 <i class="fa fa-paper-plane"></i>
             </button>
         </div>
