@@ -2,6 +2,14 @@
 
 All notable changes to the MG Accounting Website will be documented in this file.
 
+## [1.1.1] - 2024-03-19
+
+### Fixed
+- Fixed chatbot response format to prevent mock conversations
+- Removed emojis and casual language from responses
+- Ensured direct, professional responses to user queries
+- Improved system prompts for better response quality
+
 ## [1.1.0] - 2024-03-19
 
 ### Added

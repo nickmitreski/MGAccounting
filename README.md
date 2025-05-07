@@ -67,6 +67,7 @@ This is the official website for MG Accounting, a professional tax accounting an
 - For best results, always provide clear examples of the style you want in the system prompt.
 
 ## Latest Updates (March 2024)
+- Version 1.1.1: Fixed chatbot response format and improved professional tone
 - Enhanced chatbot with improved typing indicators and natural response timing
 - Added topic detection system for better context awareness
 - Optimized chat history storage with timestamps and topic tracking
