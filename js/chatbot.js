@@ -14,6 +14,13 @@ class Chatbot {
         this.hasScheduledMeeting = false;
         this.calendlyWidget = null;
         
+        // Check if all required elements exist
+        if (!this.container || !this.toggle || !this.window || !this.close || 
+            !this.messages || !this.input || !this.send || !this.badge) {
+            console.error('Required chatbot elements not found');
+            return;
+        }
+        
         this.initializeEventListeners();
     }
 
@@ -59,11 +66,16 @@ class Chatbot {
     }
 
     toggleChat() {
+        if (!this.window || !this.badge) {
+            console.error('Chatbot elements not found');
+            return;
+        }
+        
         this.isOpen = !this.isOpen;
         this.window.classList.toggle('active', this.isOpen);
         this.badge.style.display = this.isOpen ? 'none' : 'flex';
         
-        if (this.isOpen) {
+        if (this.isOpen && this.input) {
             this.input.focus();
         }
     }
@@ -173,7 +185,12 @@ Example of CORRECT response:
 User: What is GST?
 Assistant: GST is a 10% tax on most goods and services in Australia. Businesses with turnover over $75,000 must register.`;
 
-            const response = await fetch('/api/chatbot', {
+            // Use the correct API endpoint URL
+            const apiUrl = window.location.hostname === 'localhost' 
+                ? '/api/chatbot'
+                : 'https://mg-accounting.vercel.app/api/chatbot';
+
+            const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -208,7 +225,6 @@ Assistant: GST is a 10% tax on most goods and services in Australia. Businesses 
             return data.choices[0].message.content;
         } catch (error) {
             console.error('Error in getAIResponse:', error);
-            // Return a more helpful error message
             return "I apologize, but I'm having trouble processing your request. Please try again or contact MG Accounting directly at (03) 9563 4666 for immediate assistance.";
         }
     }
