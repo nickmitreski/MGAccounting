@@ -4,20 +4,11 @@
   "description": "MG Accounting Website with AI-powered chatbot",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "serve .",
+    "dev": "serve ."
   },
   "dependencies": {
-    "next": "14.1.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "swiper": "^11.0.5"
-  },
-  "devDependencies": {
-    "eslint": "^8.56.0",
-    "eslint-config-next": "14.1.0"
+    "serve": "^14.2.1"
   },
   "engines": {
     "node": ">=18.0.0"
