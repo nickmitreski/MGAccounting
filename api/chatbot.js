@@ -52,6 +52,21 @@ ${knowledgeBase}
 Remember: You are a professional advisor, not a casual friend. Maintain appropriate business communication standards while being helpful and clear. Your goal is to provide accurate, actionable information while guiding users toward professional consultation when needed.`;
 
 module.exports = async function handler(req, res) {
+    // Set CORS headers
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', 'https://www.mgaccounting.com.au');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    );
+
+    // Handle preflight requests
+    if (req.method === 'OPTIONS') {
+        res.status(200).end();
+        return;
+    }
+
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }
